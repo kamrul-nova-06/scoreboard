@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Live Match Scoreboard</title>
+  <style>
+    body {
+      margin: 0;
+      background: transparent;
+      font-family: sans-serif;
+      color: white;
+      text-align: center;
+    }
+    .scoreboard {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 24px;
+      gap: 20px;
+    }
+    .team {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .team img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+    .vs {
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .time {
+      margin-top: 10px;
+      font-size: 20px;
+    }
+    .controls {
+      margin-top: 10px;
+    }
+    button {
+      padding: 5px 12px;
+      margin: 0 5px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      background-color: #00bfff;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="scoreboard">
+    <div class="team" id="team1">
+      <img src="https://upload.wikimedia.org/wikipedia/en/e/e4/Mohammedan_SC_crest.png" alt="Team 1">
+      <span id="name1">Mohammedan</span>
+      <span id="score1">1</span>
+    </div>
+
+    <div class="vs">:</div>
+
+    <div class="team" id="team2">
+      <span id="score2">2</span>
+      <span id="name2">Abahani</span>
+      <img src="https://upload.wikimedia.org/wikipedia/en/b/b0/Abahani_Limited_crest.png" alt="Team 2">
+    </div>
+  </div>
+
+  <div class="time" id="timer">00:00</div>
+
+  <div class="controls">
+    <button onclick="start()">▶ Start</button>
+    <button onclick="pause()">⏸ Pause</button>
+    <button onclick="reset()">⏹ Reset</button>
+  </div>
+
+  <script>
+    let minutes = 0;
+    let seconds = 0;
+    let timerInterval = null;
+
+    function updateTimerDisplay() {
+      const min = minutes.toString().padStart(2, '0');
+      const sec = seconds.toString().padStart(2, '0');
+      document.getElementById("timer").innerText = `${min}:${sec}`;
+    }
+
+    function start() {
+      if (timerInterval) return;
+      timerInterval = setInterval(() => {
+        seconds++;
+        if (seconds >= 60) {
+          seconds = 0;
+          minutes++;
+        }
+        updateTimerDisplay();
+      }, 1000);
+    }
+
+    function pause() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+
+    function reset() {
+      pause();
+      minutes = 0;
+      seconds = 0;
+      updateTimerDisplay();
+    }
+
+    updateTimerDisplay();
+  </script>
+</body>
+  </html>
